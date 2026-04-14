@@ -5,21 +5,12 @@ suppressPackageStartupMessages({
   library(argparse)
 })
 options('python_cmd'='C:/ProgramData/Anaconda3/python.exe')
-
-  main <- function(args) {
-    if (file.exists('task.csv')) {
-      tasks <<- read.csv('tasks.csv', stringsAsFactors = FALSE)
-    } else {
-      tasks <<- data.frame(id = integer(), task = character())
-    }
-  } # loads existing tasks to bypass the amnesia problem ie rebuting the task each time
   
-  
-TASK_FILE <- ".tasks.txt" # nolint
+TASK_FILE <- ".tasks.txt" # nolint # the .tasks.txt is where the list is saved to
 
 add_task <- function(task_input) {
   if (is.null(task_input) || length(task_input) == 0 || task_input == "") {
-    message("Error: No task description provided.")
+    print("Error: No tasks provided.")
     return(NULL)
   } # This checks if the task is empty
   if (!exists("tasks") || nrow(tasks) == 0) {
@@ -35,8 +26,12 @@ add_task <- function(task_input) {
   return(new_task_row)
   }
 
-list_tasks <- function() {
- 
+list_tasks <- function(show_tasks) {
+  if (nrow(show_tasks) == 0) {
+    print('List empty!')
+  } else {
+    print(show_tasks)
+  }
 }
 
 remove_task <- function(index) {
