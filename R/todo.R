@@ -32,7 +32,10 @@ list_tasks <- function() {
   } else {
     return("") # this returns empty string if no file is found
   } 
-  formatted_rows <- paste0('. ', tasks)
+  if (length(tasks) == 0) {
+    return("Empty") # in case there are empty files
+  }
+  formatted_rows <- paste0(seq_along(tasks), '. ', tasks) #seq_along(tasks) adds the numbers before the items
   final_string <- paste(formatted_rows, collapse = "\n") # collapses all rows into a single string
   return(final_string)
 }
