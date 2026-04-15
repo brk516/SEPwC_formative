@@ -26,14 +26,18 @@ add_task <- function(task_input) {
   return(new_task_row)
   }
 
-list_tasks <- function(show_tasks) {
-  if (nrow(show_tasks) == 0) {
-    print('List empty!')
+list_tasks <- function() { 
+  if (file.exists(TASK_FILE)) {
+  tasks <- readLines(TASK_FILE)
   } else {
-    print(show_tasks)
-  }
+    return("") # this returns empty string if no file is found
+  } 
+  formatted_rows <- paste0('. ', tasks)
+  final_string <- paste(formatted_rows, collapse = "\n") # collapses all rows into a single string
+  return(final_string)
 }
 
+    
 remove_task <- function(index) {
   if (!exists('tasks') || nrow(tasks) == 0) {
     print('Error: List is empty.')
