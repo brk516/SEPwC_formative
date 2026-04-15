@@ -42,16 +42,20 @@ list_tasks <- function() {
 
     
 remove_task <- function(index) {
-  if (!exists('tasks') || nrow(tasks) == 0) {
-    print('Error: List is empty.')
+  if (!file.exists(TASK_FILE)) {
+    stop('Error: List is empty.') # the stop() abandons the function
   return(NULL) # ! = NOT, so if tasks don't exist or there are no rows in the list then states that
+  } 
+  tasks <- readLines(TASK_FILE)
+  if (length(tasks) == 0) {
+    stop('Error: List is empty!') # again stop() will make the test work
   } else {
-  tasks <<- tasks[tasks$id !=index,] # looks at every row in the id column and asks if they are not the same to the chosen id.
+  tasks <- tasks[-index] # REMOVES TASK, it keeps everything except the item at the chosen index
   # [] these show a specific subset of a table
-  write.csv(tasks, TASK_FILE, row.names = FALSE)
+  writeLines(tasks, TASK_FILE)
   print(paste('Task', index, 'removed'))
   }
-}
+} #continue by testing this.
 
 main <- function(args) {
 
