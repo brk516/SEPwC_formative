@@ -13,17 +13,13 @@ add_task <- function(task_input) {
     print("Error: No tasks provided.")
     return(NULL)
   } # This checks if the task is empty
-  if (!exists("tasks") || nrow(tasks) == 0) {
-    next_id <- 1 #if the task is empty it'll start from 1 
+  if (file.exists(TASK_FILE)) {
+    tasks <- readLines(TASK_FILE)
   } else {
-  next_id <- max(tasks$id) + 1 #adds 1 to already existing number of tasks
+    tasks <- character() # if there are no current tasks it'll start empty
   }
-  new_task_row <- data.frame(
-    id = next_id,
-    task = as.character(task_input),
-    stringsAsFactors = FALSE
-  ) # ensures right type characters used
-  return(new_task_row)
+    tasks <- c(tasks, task_input) # this combines the new task with the list (thats what the c does)
+    writeLines(tasks, TASK_FILE) # this will save the updated list, so you can see the new item
   }
 
 list_tasks <- function() { 
@@ -51,7 +47,7 @@ remove_task <- function(index) {
     stop('Error: List is empty!') # again stop() will make the test work
   } 
   if (index < 1 || index > length(tasks))
-  { stop("Error: wrong index.") # should stop task if a wong index is entered
+  { stop("Error: wrong index.") # should stop task if a wrong index is entered
   }else {
   tasks <- tasks[-index] # REMOVES TASK, it keeps everything except the item at the chosen index
   # [] these show a specific subset of a table
