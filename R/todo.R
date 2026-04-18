@@ -1,5 +1,5 @@
 #!/usr/bin/env Rscript
-install.packages("argparse", repos = "https://cran.rstudio.com/")
+# install.packages("argparse") - add this line incase this package isnt already installed
 # if doesn't work add this: install.packages("argparse", repos = "https://cran.rstudio.com/")
 suppressPackageStartupMessages({
   library(argparse)
@@ -10,7 +10,6 @@ TASK_FILE <- ".tasks.txt" # nolint # the .tasks.txt is where the list is saved t
 
 add_task <- function(task_input) {
   if (is.null(task_input) || length(task_input) == 0 || task_input == "") {
-    print("Error: No tasks provided.")
     return(NULL)
   } # This checks if the task is empty
   if (file.exists(TASK_FILE)) {
@@ -39,20 +38,19 @@ list_tasks <- function() {
     
 remove_task <- function(index) {
   if (!file.exists(TASK_FILE)) {
-    stop('Error: List is empty.') # the stop() abandons the function
+    stop() # the stop() abandons the function
   return(NULL) # ! = NOT, so if tasks don't exist or there are no rows in the list then states that
   } 
   tasks <- readLines(TASK_FILE)
   if (length(tasks) == 0) {
-    stop('Error: List is empty!') # again stop() will make the test work
+    stop() # again stop() will make the test work
   } 
   if (index < 1 || index > length(tasks))
-  { stop("Error: wrong index.") # should stop task if a wrong index is entered
+  { stop() # should stop task if a wrong index is entered
   }else {
   tasks <- tasks[-index] # REMOVES TASK, it keeps everything except the item at the chosen index
   # [] these show a specific subset of a table
   writeLines(tasks, TASK_FILE)
-  print(paste('Task', index, 'removed'))
   }
 } #continue by testing this.
 
