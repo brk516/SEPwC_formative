@@ -49,7 +49,10 @@ remove_task <- function(index) {
   tasks <- readLines(TASK_FILE)
   if (length(tasks) == 0) {
     stop('Error: List is empty!') # again stop() will make the test work
-  } else {
+  } 
+  if (index < 1 || index > length(tasks))
+  { stop("Error: wrong index.") # should stop task if a wong index is entered
+  }else {
   tasks <- tasks[-index] # REMOVES TASK, it keeps everything except the item at the chosen index
   # [] these show a specific subset of a table
   writeLines(tasks, TASK_FILE)
