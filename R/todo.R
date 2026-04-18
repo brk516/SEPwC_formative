@@ -6,7 +6,7 @@ suppressPackageStartupMessages({
 })
 options("python_cmd" = "C:/ProgramData/Anaconda3/python.exe")
 
-TASK_FILE <- ".tasks.txt" # nolint # the .tasks.txt is where the list is saved to
+TASK_FILE <- ".tasks.txt" # nolint # .tasks.txt where list saved
 
 add_task <- function(task_input) {
   if (is.null(task_input) || length(task_input) == 0 || task_input == "") {
@@ -31,9 +31,8 @@ list_tasks <- function() {
   }
   formatted_rows <- paste0(seq_along(tasks), ". ", tasks)
   #seq_along(tasks) adds the numbers before the items
-  final_string <- paste(formatted_rows, collapse = "\n")
+  paste(formatted_rows, collapse = "\n")
   # collapses all rows into a single string
-  return(final_string)
 }
 remove_task <- function(index) {
   if (!file.exists(TASK_FILE)) {
@@ -52,7 +51,7 @@ remove_task <- function(index) {
     # [] these show a specific subset of a table
     writeLines(tasks, TASK_FILE)
   }
-} #continue by testing this.
+}
 
 main <- function(args) {
 
